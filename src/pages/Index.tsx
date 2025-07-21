@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -69,12 +70,14 @@ const Index = () => {
             </div>
             <nav className="hidden md:flex items-center space-x-6">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Каталог</a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Избранное</a>
+              <Link to="/favorites" className="text-muted-foreground hover:text-primary transition-colors">Избранное</Link>
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Помощь</a>
-              <Button className="bg-primary hover:bg-primary/90">
-                <Icon name="Plus" size={16} className="mr-2" />
-                Разместить
-              </Button>
+              <Link to="/create">
+                <Button className="bg-primary hover:bg-primary/90">
+                  <Icon name="Plus" size={16} className="mr-2" />
+                  Разместить
+                </Button>
+              </Link>
             </nav>
             <Button variant="ghost" className="md:hidden">
               <Icon name="Menu" size={24} />
@@ -165,13 +168,15 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {hotDeals.map((deal) => (
-              <Card key={deal.id} className="hover:shadow-lg transition-shadow cursor-pointer">
+              <Card key={deal.id} className="hover:shadow-lg transition-all duration-300 cursor-pointer group animate-fade-in">
                 <div className="relative">
-                  <img 
-                    src={deal.image} 
-                    alt={deal.title}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                  />
+                  <Link to={`/product/${deal.id}`}>
+                    <img 
+                      src={deal.image} 
+                      alt={deal.title}
+                      className="w-full h-48 object-cover rounded-t-lg group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </Link>
                   {deal.isNew && (
                     <Badge className="absolute top-3 left-3 bg-secondary hover:bg-secondary/80">
                       Новое
@@ -186,7 +191,9 @@ const Index = () => {
                   </Button>
                 </div>
                 <CardContent className="p-4">
-                  <h4 className="font-semibold mb-2 line-clamp-2">{deal.title}</h4>
+                  <Link to={`/product/${deal.id}`}>
+                    <h4 className="font-semibold mb-2 line-clamp-2 hover:text-primary transition-colors">{deal.title}</h4>
+                  </Link>
                   <div className="text-2xl font-bold text-primary mb-2">{deal.price}</div>
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <span className="flex items-center">
